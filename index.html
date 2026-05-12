@@ -1,0 +1,898 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syed Anees Ashraf — Full Stack Developer</title>
+  <meta name="description"
+    content="Portfolio of Syed Anees Ashraf — a creative full-stack developer crafting immersive digital experiences. Specializing in React, Node.js, Python and AI." />
+  <meta name="keywords" content="developer, portfolio, full-stack, React, Python, AI, web developer" />
+  <meta property="og:title" content="Syed Anees Ashraf — Full Stack Developer" />
+  <meta property="og:description" content="Creative full-stack developer crafting immersive digital experiences." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════  LOADER  ═══════════ -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-name">Syed Anees Ashraf</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loader-bar"></div>
+      </div>
+      <span class="loader-pct" id="loader-pct">0%</span>
+    </div>
+  </div>
+
+  <!-- ═══════════  CUSTOM CURSOR  ═══════════ -->
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true">
+    <span id="cursor-label" class="cursor-label"></span>
+  </div>
+
+  <!-- ═══════════  NAVBAR  ═══════════ -->
+  <header id="navbar" role="banner">
+    <nav class="nav-island" aria-label="Main navigation">
+      <a href="#home" class="nav-link active" id="nav-home" data-cursor="Home">Home</a>
+      <a href="#about" class="nav-link" id="nav-about" data-cursor="About">About</a>
+      <a href="#skills" class="nav-link" id="nav-skills" data-cursor="Skills">Skills</a>
+      <a href="#projects" class="nav-link" id="nav-projects" data-cursor="Work">Projects</a>
+      <a href="#contact" class="nav-link" id="nav-contact" data-cursor="Hi!">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ═══════════  LEFT RAIL  ═══════════ -->
+  <aside class="social-rail rail-left" aria-label="Social links">
+    <a href="https://github.com/SyedAneesAshraf" target="_blank" rel="noopener noreferrer" class="rail-icon"
+      aria-label="GitHub" data-cursor="GitHub">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+      </svg>
+    </a>
+    <a href="https://linkedin.com/in/syed-anees-ashraf-9b50732b8" target="_blank" rel="noopener noreferrer"
+      class="rail-icon" aria-label="LinkedIn" data-cursor="LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    </a>
+    <a href="https://www.instagram.com/itz_anees04/" target="_blank" rel="noopener noreferrer" class="rail-icon"
+      aria-label="Instagram" data-cursor="Instagram">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+      </svg>
+    </a>
+    <div class="rail-line" aria-hidden="true"></div>
+  </aside>
+
+  <!-- ═══════════  RIGHT RAIL  ═══════════ -->
+  <aside class="social-rail rail-right" aria-label="Contact info">
+    <a href="mailto:syedaneesashraf246@gmail.com" class="email-rotated"
+      data-cursor="Email">syedaneesashraf246@gmail.com</a>
+    <div class="rail-line" aria-hidden="true"></div>
+  </aside>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HERO — FULLSCREEN EDITORIAL
+    ════════════════════════════════════════════════════════ -->
+    <section id="home" class="section hero-section" aria-label="Introduction">
+
+      <!-- Split bg panels -->
+      <div class="hero-bg-left" aria-hidden="true"></div>
+      <div class="hero-bg-right" aria-hidden="true"></div>
+
+      <!-- Warm ambient orbs -->
+      <div class="h-orb h-orb-1" aria-hidden="true"></div>
+      <div class="h-orb h-orb-2" aria-hidden="true"></div>
+
+      <!-- Three.js 3D background particles -->
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero-layout">
+
+        <!-- ── TOP BAR ── -->
+        <div class="hero-topbar" id="hero-topbar">
+          <div class="hero-role-tag">Full Stack Developer</div>
+          <div class="hero-chip">
+            <span class="chip-pulse"></span>
+            Available for opportunities
+          </div>
+        </div>
+
+        <!-- ── GIANT NAME ── -->
+        <h1 class="hero-giant-name" id="hero-giant-name">
+          <span class="name-line">
+            <span class="name-word" id="hw-1">Syed Anees</span>
+          </span>
+          <span class="name-line">
+            <span class="name-word grad" id="hw-2">Ashraf.</span>
+          </span>
+        </h1>
+
+        <!-- ── BOTTOM 3-COL ROW ── -->
+        <div class="hero-bottom" id="hero-bottom">
+
+          <!-- Left: typewriter + desc + CTAs -->
+          <div class="hero-desc-col">
+            <div class="hero-role-row" aria-live="polite">
+              <span class="role-prefix">I </span>
+              <span id="typewriter" class="typewriter-text"></span>
+              <span class="cursor-blink" aria-hidden="true">|</span>
+            </div>
+            <p class="hero-desc">
+              A passionate CS student turning ideas into polished
+              digital experiences. Always building, always learning.
+            </p>
+            <div class="hero-ctas">
+              <a href="#projects" class="btn btn-primary mag-btn" id="hero-projects-btn" data-cursor="Explore">
+                <span>View Projects</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+                <span class="btn-ripple"></span>
+              </a>
+              <a href="#contact" class="btn btn-outline mag-btn" id="hero-contact-btn" data-cursor="Say Hi">Say
+                Hello</a>
+            </div>
+          </div>
+
+          <!-- Center: Three.js 3D Scene -->
+          <div class="hero-3d-col" id="hero-3d-col">
+            <canvas id="hero-3d-canvas" aria-label="Interactive 3D geometric shape"></canvas>
+          </div>
+
+          <!-- Right: Stats -->
+          <div class="hero-stats-col">
+            <div class="hstat">
+              <span class="hstat-num">10+</span>
+              <span class="hstat-label">Projects</span>
+            </div>
+            <div class="hstat-divider" aria-hidden="true"></div>
+            <div class="hstat">
+              <span class="hstat-num">15+</span>
+              <span class="hstat-label">Technologies</span>
+            </div>
+            <div class="hstat-divider" aria-hidden="true"></div>
+            <div class="hstat">
+              <span class="hstat-num">200+</span>
+              <span class="hstat-label">Commits</span>
+            </div>
+          </div>
+
+        </div><!-- end hero-bottom -->
+
+      </div><!-- end hero-layout -->
+
+      <!-- scroll hint -->
+      <!-- <div class="scroll-hint" aria-hidden="true">
+        <span class="scroll-hint-text" style="font-size:9px;letter-spacing:.14em;">scroll</span>
+        <div class="scroll-hint-line">
+          <div class="scroll-hint-dot"></div>
+        </div>
+      </div> -->
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ABOUT — EDITORIAL MAGAZINE LAYOUT
+    ════════════════════════════════════════════════════════ -->
+    <section id="about" class="section about-section" aria-label="About me">
+
+      <!-- Giant faded watermark word -->
+      <div class="about-watermark" aria-hidden="true">HELLO.</div>
+
+      <div class="about-editorial">
+
+        <!-- ── TOP: Section label + chapter number ── -->
+        <div class="about-header" data-reveal>
+          <div class="about-chapter">
+            <span class="about-chapter-num">01</span>
+            <span class="about-chapter-line" aria-hidden="true"></span>
+          </div>
+          <span class="section-label" style="opacity:1;transform:none;">who am i</span>
+        </div>
+
+        <!-- ── MAIN GRID: bio left / stats right ── -->
+        <div class="about-main-grid">
+
+          <!-- Left: Bio text, editorial-style -->
+          <div class="about-text-col" data-reveal>
+            <h2 class="about-headline">
+              Crafting<br />
+              <em class="about-headline-em">meaningful</em><br />
+              experiences.
+            </h2>
+            <div class="about-bio-body">
+              <p>A <strong>Computer Science student</strong> based in Coimbatore, India passionate about building
+                intuitive and performant applications. I enjoy creating products that balance clean engineering with
+                thoughtful user experience.</p>
+
+              <p>When not coding, I'm exploring emerging technologies, experimenting with design systems, or diving deep
+                into frontend UI patterns and interactions.</p>
+
+              <p>Currently seeking my <strong>first developer role</strong> — an opportunity to learn fast, contribute
+                meaningfully, and grow as an engineer.</p>
+            </div>
+            <div class="about-cta-row">
+              <a href="https://drive.google.com/file/d/1VNq4YrX8_RW0beigChWOOYc2BXtFZKu4/view?usp=sharing"
+                target="_blank" class="btn btn-outline btn-sm mag-btn" id="resume-btn" data-cursor="Download">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download Resume
+              </a>
+              <div class="about-avail-pill">
+                <span class="about-avail-dot"></span>
+                Open to work
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Developer DNA / Principles -->
+          <div class="about-principles-col" data-reveal>
+
+            <div class="abt-header">
+              <span class="section-label" style="opacity:1;transform:none;">developer dna</span>
+            </div>
+
+            <div class="principles-list">
+
+              <div class="principle-item" id="p-1">
+                <div class="p-num">01</div>
+                <div class="p-body">
+                  <div class="p-title">Just build it.</div>
+                  <div class="p-desc">I'd rather have something broken and real than perfect and imaginary. Shipping is
+                    how I actually learn.</div>
+                </div>
+              </div>
+
+              <div class="principle-item" id="p-2">
+                <div class="p-num">02</div>
+                <div class="p-body">
+                  <div class="p-title">Write code I can read tomorrow.</div>
+                  <div class="p-desc">If I can't understand it a week later, it wasn't clean enough. Clarity over
+                    cleverness, always.</div>
+                </div>
+              </div>
+
+              <div class="principle-item" id="p-3">
+                <div class="p-num">03</div>
+                <div class="p-body">
+                  <div class="p-title">Break things on purpose.</div>
+                  <div class="p-desc">The best way I've found to understand something is to mess with it until it stops
+                    working — then figure out why.</div>
+                </div>
+              </div>
+
+              <div class="principle-item" id="p-4">
+                <div class="p-num">04</div>
+                <div class="p-body">
+                  <div class="p-title">Ask more questions.</div>
+                  <div class="p-desc">I'm still figuring a lot of things out. Googling and reading docs aren't signs of
+                    weakness — they're part of the process.</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Currently building note card -->
+            <div class="about-current-note">
+              <div class="acn-label">Currently Building</div>
+              <div class="acn-title">Local Multiplayer Combat Game</div>
+              <div class="acn-stack">
+                <span>Unity</span><span>C#</span><span>Game Dev</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div><!-- end main grid -->
+
+        <!-- ── DIVIDER ── -->
+        <div class="about-divider" data-reveal aria-hidden="true"></div>
+
+        <!-- ── MARQUEE TICKER ── -->
+        <div class="about-marquee-wrap" aria-hidden="true">
+          <div class="about-marquee">
+            <div class="marquee-track">
+              <span>Full Stack Developer</span>
+              <span class="mq-dot">✦</span>
+              <span>React &amp; Next.js</span>
+              <span class="mq-dot">✦</span>
+              <span>Python Developer</span>
+              <span class="mq-dot">✦</span>
+              <span>UI/UX Enthusiast</span>
+              <span class="mq-dot">✦</span>
+              <span>Open to Work</span>
+              <span class="mq-dot">✦</span>
+              <span>India · GMT +5:30</span>
+              <span class="mq-dot">✦</span>
+              <span>200+ Commits</span>
+              <span class="mq-dot">✦</span>
+              <span>AI &amp; ML Explorer</span>
+              <span class="mq-dot">✦</span>
+              <span>Node.js · FastAPI</span>
+              <span class="mq-dot">✦</span>
+              <span>Always Building</span>
+              <span class="mq-dot">✦</span>
+              <!-- duplicate for seamless loop -->
+              <span>Full Stack Developer</span>
+              <span class="mq-dot">✦</span>
+              <span>React &amp; Next.js</span>
+              <span class="mq-dot">✦</span>
+              <span>Python Developer</span>
+              <span class="mq-dot">✦</span>
+              <span>UI/UX Enthusiast</span>
+              <span class="mq-dot">✦</span>
+              <span>Open to Work</span>
+              <span class="mq-dot">✦</span>
+              <span>India · GMT +5:30</span>
+              <span class="mq-dot">✦</span>
+              <span>200+ Commits</span>
+              <span class="mq-dot">✦</span>
+              <span>AI &amp; ML Explorer</span>
+              <span class="mq-dot">✦</span>
+              <span>Node.js · FastAPI</span>
+              <span class="mq-dot">✦</span>
+              <span>Always Building</span>
+              <span class="mq-dot">✦</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end editorial -->
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SKILLS
+    ════════════════════════════════════════════════════════ -->
+    <section id="skills" class="section skills-section" aria-label="Skills and technologies">
+
+      <!-- Skills watermark -->
+      <div class="skills-watermark" aria-hidden="true">STACK</div>
+
+      <div class="section-container" style="position:relative;z-index:1;">
+        <div class="section-header" data-reveal>
+          <span class="section-label">02 — what i know</span>
+          <h2 class="section-title">Skills &amp; Technologies</h2>
+        </div>
+
+        <div class="skills-layout" data-reveal>
+          <div class="skills-visual-panel">
+            <div class="skills-toolbar">
+              <div>
+                <span class="section-label section-label-inline" style="opacity:1;transform:none;">interactive
+                  stack</span>
+                <p class="skills-toolbar-copy">Filter the globe, then hover an icon to see how it fits into the work I
+                  actually ship.</p>
+              </div>
+              <div class="skills-filters" role="tablist" aria-label="Skill filters">
+                <button type="button" class="skill-filter active" data-filter="all">All</button>
+                <button type="button" class="skill-filter" data-filter="ai">AI / ML</button>
+                <button type="button" class="skill-filter" data-filter="cv">Vision</button>
+                <button type="button" class="skill-filter" data-filter="frontend">Frontend</button>
+                <button type="button" class="skill-filter" data-filter="backend">Backend</button>
+                <button type="button" class="skill-filter" data-filter="data">Data</button>
+                <button type="button" class="skill-filter" data-filter="cloud">Cloud</button>
+                <button type="button" class="skill-filter" data-filter="tools">Tools</button>
+              </div>
+            </div>
+
+            <div class="sphere-wrapper">
+              <!-- Glowing ring behind sphere -->
+              <div class="sphere-glow-ring" aria-hidden="true"></div>
+              <div id="tech-sphere" class="tech-sphere" role="img" aria-label="3D rotating technology sphere"></div>
+            </div>
+
+            <div id="skill-tooltip" class="skill-tooltip-card" aria-live="polite">
+              <div class="skill-tooltip-kicker">Hover an icon</div>
+              <div class="skill-tooltip-name">Python</div>
+              <div class="skill-tooltip-meta"></div>
+              <div class="skill-tooltip-desc">A living map of the stack behind the projects in this portfolio.</div>
+              <div class="skill-tooltip-projects"></div>
+            </div>
+          </div>
+
+          <div class="skills-stack-panel">
+            <article id="skill-focus-panel" class="skill-tier-card skill-focus-panel-card" aria-live="polite">
+              <div class="skill-focus-head">
+                <span class="skill-focus-label">Focus mode</span>
+                <span class="skill-focus-count">30 icons</span>
+              </div>
+              <div class="skill-focus-title">All stack, no filter.</div>
+              <p class="skill-focus-copy">Pick a category to reshuffle the globe and surface the parts of the stack that
+                matter most for that lane.</p>
+              <div class="skill-focus-chips"></div>
+            </article>
+
+            <article class="skill-tier-card tier-core">
+              <div class="tier-head">
+                <span class="tier-index">01</span>
+                <span class="tier-label">Core Stack</span>
+              </div>
+              <p class="tier-copy">Production-ready tools I reach for first — used in shipped, real-world projects.</p>
+              <div class="tier-tags">
+                <span class="stag">Python</span>
+                <span class="stag">PyTorch</span>
+                <span class="stag">React</span>
+                <span class="stag">FastAPI</span>
+                <span class="stag">OpenCV</span>
+                <span class="stag">MongoDB</span>
+                <span class="stag">SQL</span>
+                <span class="stag">Firebase</span>
+                <span class="stag">JavaScript</span>
+                <span class="stag">Git</span>
+                <span class="stag">GitHub</span>
+              </div>
+            </article>
+
+            <article class="skill-tier-card tier-collab">
+              <div class="tier-head">
+                <span class="tier-index">02</span>
+                <span class="tier-label">Confident &amp; Familiar</span>
+              </div>
+              <p class="tier-copy">Tools I use fluently across team settings, pipelines, and delivery workflows.</p>
+              <div class="tier-tags">
+                <span class="stag">C++</span>
+                <span class="stag">Scala</span>
+                <span class="stag">MediaPipe</span>
+                <span class="stag">Pinecone</span>
+                <span class="stag">Groq</span>
+                <span class="stag">React Native</span>
+                <span class="stag">Flask</span>
+                <span class="stag">Tailwind</span>
+                <span class="stag">Node.js</span>
+                <span class="stag">Hadoop</span>
+              </div>
+            </article>
+
+            <article class="skill-tier-card tier-learn">
+              <div class="tier-head">
+                <span class="tier-index">03</span>
+                <span class="tier-label">Actively Growing</span>
+              </div>
+              <p class="tier-copy">Frontier areas I'm pushing deeper into — research, systems, and AI at scale.</p>
+              <div class="tier-tags">
+                <span class="stag">AI Agents</span>
+                <span class="stag">Multi-agent Orchestration</span>
+                <span class="stag">Multimodal Learning</span>
+                <span class="stag">RAG Systems</span>
+                <span class="stag">Cloud-native Design</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         PROJECTS — STACKED CARD DECK
+    ════════════════════════════════════════════════════════ -->
+    <section id="projects" class="section projects-section" aria-label="Projects">
+      <div class="section-container">
+
+        <div class="section-header px-section" data-reveal>
+          <span class="section-label">03 — what i've built</span>
+          <h2 class="section-title">Selected Work</h2>
+        </div>
+
+        <!-- ── Deck stage ── -->
+        <div class="proj-deck-stage" id="proj-deck-stage">
+
+          <!-- Card 1 — FindIn'.ai -->
+          <article class="deck-card" data-index="0" id="dc-1">
+            <div class="dc-preview dc-preview-1">
+              <div class="dc-preview-glow"></div>
+              <div class="mock-window">
+                <div class="mock-bar"><span></span><span></span><span></span></div>
+                <div class="mock-body mock-pipeline">
+                  <div class="mock-pipeline-label">RAG Pipeline · 6 Agents</div>
+                  <div class="mock-pipeline-steps">
+                    <div class="mps completed">Query Decompose</div>
+                    <div class="mps-arrow">→</div>
+                    <div class="mps completed">Retrieve</div>
+                    <div class="mps-arrow">→</div>
+                    <div class="mps active">Rerank ⚡</div>
+                  </div>
+                  <div class="mock-vc-row">
+                    <div class="mock-vc-badge"><span class="ai-pulse"></span>91+ VCs matched</div>
+                    <div class="mock-vc-acc">87% top-3 acc.</div>
+                  </div>
+                  <div class="mock-latency-bar">
+                    <div class="mlb-fill"></div>
+                    <span>sub-2s latency</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dc-body">
+              <div class="dc-meta-row">
+                <span class="dc-num">01</span>
+                <span class="dc-year">2024</span>
+              </div>
+              <h3 class="dc-title">FindIn'.ai</h3>
+              <p class="dc-desc">Architected a 6-agent RAG pipeline — query decomposition → retrieval → reranking →
+                summarization → VC matching → translation — over 3,292+ documents. Investor-matching engine ranked 91+
+                VCs via Cohere embeddings, achieving 87% top-3 accuracy on a held-out eval set.</p>
+              <div class="dc-extra">
+                <div class="dc-stats">
+                  <div class="dc-stat"><span class="ds-val">6</span><span class="ds-label">Agent pipeline</span></div>
+                  <div class="dc-stat"><span class="ds-val">87%</span><span class="ds-label">Top-3 accuracy</span></div>
+                  <div class="dc-stat"><span class="ds-val">&lt;2s</span><span class="ds-label">E2E latency</span></div>
+                </div>
+              </div>
+              <div class="dc-stack">
+                <span>Cohere</span><span>Pinecone</span><span>Groq</span><span>FastAPI</span><span>React</span>
+              </div>
+              <div class="dc-actions">
+                <a href="https://github.com/SyedAneesAshraf" class="plink-btn mag-btn" aria-label="GitHub">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 — SpecSync -->
+          <article class="deck-card" data-index="1" id="dc-2">
+            <div class="dc-preview dc-preview-2">
+              <div class="dc-preview-glow"></div>
+              <div class="mock-window">
+                <div class="mock-bar"><span></span><span></span><span></span></div>
+                <div class="mock-body mock-specsync">
+                  <div class="mock-req-header">
+                    <span class="mock-req-id">REQ-042</span>
+                    <span class="mock-req-tag">Authentication</span>
+                  </div>
+                  <div class="mock-diff">
+                    <div class="mock-diff-line add">+ OAuth2 SSO support added</div>
+                    <div class="mock-diff-line mod">~ Session timeout: 30m → 15m</div>
+                    <div class="mock-diff-line del">− Basic auth removed</div>
+                  </div>
+                  <div class="mock-collab-row">
+                    <div class="mock-ws-dot"></div>
+                    <span>2 editors live</span>
+                    <span class="mock-lock">🔒 Optimistic lock</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dc-body">
+              <div class="dc-meta-row">
+                <span class="dc-num">02</span>
+                <span class="dc-year">2024</span>
+              </div>
+              <h3 class="dc-title">SpecSync</h3>
+              <p class="dc-desc">MERN requirements management platform with RBAC (Admin / Editor / Viewer), Git-style
+                versioned diffs, and WebSocket real-time collaboration. REST API uses optimistic locking to handle
+                concurrent writes with signed-URL file uploads.</p>
+              <div class="dc-extra">
+                <div class="dc-stats">
+                  <div class="dc-stat"><span class="ds-val">RBAC</span><span class="ds-label">3 permission tiers</span>
+                  </div>
+                  <div class="dc-stat"><span class="ds-val">WS</span><span class="ds-label">Real-time collab</span>
+                  </div>
+                  <div class="dc-stat"><span class="ds-val">Git</span><span class="ds-label">Versioned diffs</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dc-stack">
+                <span>MongoDB</span><span>Express</span><span>React</span><span>Node.js</span><span>JWT</span>
+              </div>
+              <div class="dc-actions">
+                <a href="https://github.com/SyedAneesAshraf" class="plink-btn mag-btn" aria-label="GitHub">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 — T-CVAE -->
+          <article class="deck-card" data-index="2" id="dc-3">
+            <div class="dc-preview dc-preview-3">
+              <div class="dc-preview-glow"></div>
+              <div class="mock-window">
+                <div class="mock-bar"><span></span><span></span><span></span></div>
+                <div class="mock-body mock-tcvae">
+                  <div class="mock-train-header">Training · Epoch <span class="mock-epoch">47</span>/100</div>
+                  <div class="mock-train-metrics">
+                    <div class="mock-metric"><span class="mm-k">BLEU-4</span><span class="mm-v">0.31</span></div>
+                    <div class="mock-metric"><span class="mm-k">ROUGE-L</span><span class="mm-v">0.43</span></div>
+                    <div class="mock-metric"><span class="mm-k">KL β</span><span class="mm-v">0.82</span></div>
+                  </div>
+                  <div class="mock-progress-wrap">
+                    <div class="mock-progress-bar">
+                      <div class="mpb-fill"></div>
+                    </div>
+                    <span class="mock-progress-label">KL annealing</span>
+                  </div>
+                  <div class="mock-model-note">T-CVAE + Mask R-CNN regions</div>
+                </div>
+              </div>
+            </div>
+            <div class="dc-body">
+              <div class="dc-meta-row">
+                <span class="dc-num">03</span>
+                <span class="dc-year">2024</span>
+              </div>
+              <h3 class="dc-title">Backstory Gen · T-CVAE</h3>
+              <p class="dc-desc">Designed a Transformer-based Conditional VAE conditioned on Mask R-CNN region features
+                to generate pre-event narratives. Applied KL annealing to prevent posterior collapse — BLEU-4: 0.31 /
+                ROUGE-L: 0.43 on the VisualStoryTelling benchmark.</p>
+              <div class="dc-extra">
+                <div class="dc-stats">
+                  <div class="dc-stat"><span class="ds-val">0.31</span><span class="ds-label">BLEU-4</span></div>
+                  <div class="dc-stat"><span class="ds-val">0.43</span><span class="ds-label">ROUGE-L</span></div>
+                  <div class="dc-stat"><span class="ds-val">KL</span><span class="ds-label">Annealing applied</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dc-stack">
+                <span>PyTorch</span><span>Mask R-CNN</span><span>HuggingFace</span>
+              </div>
+              <div class="dc-actions">
+                <a href="https://github.com/SyedAneesAshraf" class="plink-btn mag-btn" aria-label="GitHub">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 — Smart Shopping Assistant -->
+          <article class="deck-card" data-index="3" id="dc-4">
+            <div class="dc-preview dc-preview-4">
+              <div class="dc-preview-glow"></div>
+              <div class="mock-window">
+                <div class="mock-bar"><span></span><span></span><span></span></div>
+                <div class="mock-body mock-shopping">
+                  <div class="mock-loc-row">
+                    <span class="mock-loc-dot"></span>
+                    <span class="mock-loc-text">Aisle 3 · ±0.8m accuracy</span>
+                  </div>
+                  <div class="mock-clip-row">
+                    <div class="mock-clip-icon">🔍</div>
+                    <div class="mock-clip-query">"blue running shoes"</div>
+                  </div>
+                  <div class="mock-results">
+                    <div class="mock-result-item">Nike Air Zoom · 94%</div>
+                    <div class="mock-result-item">Adidas Ultraboost · 88%</div>
+                  </div>
+                  <div class="mock-prec-row">
+                    <span>Collab filter</span>
+                    <span class="mock-prec-val">precision@5: 74%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dc-body">
+              <div class="dc-meta-row">
+                <span class="dc-num">04</span>
+                <span class="dc-year">2024</span>
+              </div>
+              <h3 class="dc-title">Smart Shopping Assistant</h3>
+              <p class="dc-desc">BLE trilateration + Kalman-filtered indoor positioning achieving sub-1m accuracy.
+                Integrated CLIP-based visual product search and a collaborative filtering recommender (precision@5: 74%)
+                with real-time Firebase sync.</p>
+              <div class="dc-extra">
+                <div class="dc-stats">
+                  <div class="dc-stat"><span class="ds-val">&lt;1m</span><span class="ds-label">Indoor accuracy</span>
+                  </div>
+                  <div class="dc-stat"><span class="ds-val">74%</span><span class="ds-label">precision@5</span></div>
+                  <div class="dc-stat"><span class="ds-val">CLIP</span><span class="ds-label">Visual search</span></div>
+                </div>
+              </div>
+              <div class="dc-stack">
+                <span>React Native</span><span>Firebase</span><span>BLE</span><span>CLIP</span>
+              </div>
+              <div class="dc-actions">
+                <a href="https://github.com/SyedAneesAshraf" class="plink-btn mag-btn" aria-label="GitHub">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- end deck-stage -->
+
+        <!-- ── Navigation ── -->
+        <div class="deck-controls" id="deck-controls">
+          <button class="deck-arrow deck-prev" id="deck-prev" aria-label="Previous project">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <div class="deck-dots" id="deck-dots">
+            <button class="deck-dot active" data-goto="0" aria-label="Project 1"></button>
+            <button class="deck-dot" data-goto="1" aria-label="Project 2"></button>
+            <button class="deck-dot" data-goto="2" aria-label="Project 3"></button>
+            <button class="deck-dot" data-goto="3" aria-label="Project 4"></button>
+          </div>
+          <button class="deck-arrow deck-next" id="deck-next" aria-label="Next project">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="projects-footer px-section" data-reveal>
+          <a href="https://github.com/SyedAneesAshraf" target="_blank" rel="noopener noreferrer"
+            class="btn btn-outline mag-btn" id="github-all-btn" data-cursor="GitHub">
+            View all on GitHub →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         CONTACT — SMART PROGRESSIVE FORM
+    ════════════════════════════════════════════════════════ -->
+    <section id="contact" class="section contact-section" aria-label="Contact">
+      <div class="section-container">
+        <div class="section-header" data-reveal>
+          <span class="section-label">04 — let's connect</span>
+          <h2 class="section-title">Get In Touch</h2>
+        </div>
+
+        <div class="contact-layout" data-reveal>
+
+          <div class="contact-left">
+            <p>I'm actively looking for my first developer role! Whether you have an opportunity, a project idea, or
+              just want to say hi — my inbox is always open.</p>
+            <a href="mailto:syedaneesashraf246@gmail.com" class="contact-email-link mag-btn" id="contact-email-link"
+              data-cursor="Email">
+              syedaneesashraf246@gmail.com
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+
+            <div class="contact-socials">
+              <a href="https://github.com/SyedAneesAshraf" target="_blank" rel="noopener noreferrer"
+                class="csocial mag-btn" id="c-github" data-cursor="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <a href="https://linkedin.com/in/syed-anees-ashraf-9b50732b8" target="_blank" rel="noopener noreferrer"
+                class="csocial mag-btn" id="c-linkedin" data-cursor="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                LinkedIn
+              </a>
+              <a href="https://www.instagram.com/itz_anees04/" target="_blank" rel="noopener noreferrer"
+                class="csocial mag-btn" id="c-instagram" data-cursor="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                </svg>
+                Instagram
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-form-wrap">
+            <form class="smart-form" id="smart-form" novalidate>
+
+              <div class="sf-step active" id="sf-step-1">
+                <label class="sf-label" for="sf-name">What's your name? <span class="sf-req">*</span></label>
+                <div class="sf-input-wrap">
+                  <input type="text" id="sf-name" placeholder="John Doe" autocomplete="name" class="sf-input" />
+                  <button type="button" class="sf-next-btn mag-btn" id="sf-next-1" data-cursor="Next">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="sf-step" id="sf-step-2">
+                <label class="sf-label" for="sf-email">Your email address? <span class="sf-req">*</span></label>
+                <div class="sf-input-wrap">
+                  <input type="email" id="sf-email" placeholder="john@example.com" autocomplete="email"
+                    class="sf-input" />
+                  <button type="button" class="sf-next-btn mag-btn" id="sf-next-2" data-cursor="Next">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="sf-step" id="sf-step-3">
+                <label class="sf-label" for="sf-msg">What's on your mind? <span class="sf-req">*</span></label>
+                <textarea id="sf-msg" placeholder="Tell me about your project, opportunity, or just say hi..."
+                  class="sf-input sf-textarea" rows="4"></textarea>
+                <button type="submit" class="btn btn-primary mag-btn sf-submit" id="sf-submit" data-cursor="Send">
+                  <span>Send Message</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                  </svg>
+                  <span class="btn-ripple"></span>
+                </button>
+              </div>
+
+              <div class="sf-progress" aria-label="Form progress">
+                <span class="sf-dot active" data-step="1"></span>
+                <span class="sf-dot" data-step="2"></span>
+                <span class="sf-dot" data-step="3"></span>
+              </div>
+
+              <div class="sf-success" id="sf-success" aria-live="polite">
+                <div class="sf-success-icon">✉️</div>
+                <div class="sf-success-title">Message Sent!</div>
+                <div class="sf-success-sub">Thanks! I'll get back to you within 24 hours.</div>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span>Designed &amp; Built with ❤️ by <strong>Syed Anees Ashraf</strong></span>
+      <div><a href="#home" class="footer-link">Back to top ↑</a></div>
+      <span class="footer-year">© 2026</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
