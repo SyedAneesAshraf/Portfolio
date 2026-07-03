@@ -682,7 +682,6 @@ const TECH_ITEMS = [
   // ── AI & ML ────────────────────────────────────────────────
   { name: 'PyTorch', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg', categories: ['ai'], tier: 'core', since: '2023', projects: ['T-CVAE', 'Backstory Gen'], summary: 'Model training, VAEs, transformers, and custom architectures.' },
   { name: 'HuggingFace', src: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg', categories: ['ai'], tier: 'core', since: '2023', projects: ['T-CVAE', 'FindIn\'.ai'], summary: 'Pre-trained transformers and tokenizer pipelines.' },
-  { name: 'LangChain', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/langchain/langchain-original.svg', categories: ['ai'], tier: 'collab', since: '2024', projects: ['FindIn\'.ai'], summary: 'LLM orchestration, memory chains, and tool-use agents.' },
   { name: 'Pinecone', src: 'https://avatars.githubusercontent.com/u/54333248?s=48', categories: ['ai', 'data'], tier: 'collab', since: '2024', projects: ['FindIn\'.ai'], summary: 'Vector database for semantic search and RAG retrieval.' },
   { name: 'Groq', src: 'https://avatars.githubusercontent.com/u/118523122?s=48', categories: ['ai'], tier: 'collab', since: '2024', projects: ['FindIn\'.ai'], summary: 'Ultra-fast LLM inference for real-time AI pipelines.' },
 
