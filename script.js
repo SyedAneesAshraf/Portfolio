@@ -1104,8 +1104,28 @@ window.addEventListener('load', () => {
    13. SMART PROGRESSIVE FORM
    ───────────────────────────────────────────────────── */
 let currentStep = 1;
+const smartForm = document.getElementById('smart-form');
+const sfError = document.getElementById('sf-error');
+const sfSuccess = document.getElementById('sf-success');
+const sfSubmit = document.getElementById('sf-submit');
+const sfSubmitLabel = document.querySelector('.sf-submit-label');
+
+function setFormError(message) {
+  if (!sfError) return;
+  sfError.textContent = message;
+  sfError.hidden = !message;
+}
+
+function setSubmitting(isSubmitting) {
+  if (sfSubmit) sfSubmit.disabled = isSubmitting;
+  if (sfSubmitLabel) sfSubmitLabel.textContent = isSubmitting ? 'Sending...' : 'Send Message';
+  document.querySelectorAll('.sf-next-btn').forEach(btn => {
+    btn.disabled = isSubmitting;
+  });
+}
 
 function showStep(step) {
+  setFormError('');
   document.querySelectorAll('.sf-step').forEach((s, i) => s.classList.toggle('active', i + 1 === step));
   document.querySelectorAll('.sf-dot').forEach((d, i) => d.classList.toggle('active', i + 1 === step));
   const active = document.getElementById(`sf-step-${step}`);
@@ -1116,6 +1136,7 @@ function advance(from) {
   const step = document.getElementById(`sf-step-${from}`);
   const inp = step?.querySelector('.sf-input');
   if (!inp?.value.trim()) {
+    setFormError('');
     inp.style.borderColor = 'rgba(180,50,50,.6)';
     gsap.fromTo(inp, { x: -8 }, {
       x: 0, duration: 0.4, ease: 'elastic.out(1, 0.3)',
@@ -1147,22 +1168,55 @@ document.querySelectorAll('.sf-dot').forEach(dot => {
   });
 });
 
-document.getElementById('smart-form')?.addEventListener('submit', e => {
+smartForm?.addEventListener('submit', async e => {
   e.preventDefault();
-  const n = document.getElementById('sf-name')?.value;
-  const em = document.getElementById('sf-email')?.value;
-  const m = document.getElementById('sf-msg')?.value;
-  if (!n || !em || !m) return;
-  gsap.to('.sf-step.active, .sf-progress', {
-    opacity: 0, y: -20, duration: 0.3, onComplete: () => {
-      document.querySelectorAll('.sf-step').forEach(s => s.classList.remove('active'));
-      const prog = document.querySelector('.sf-progress');
-      if (prog) prog.style.display = 'none';
-      const succ = document.getElementById('sf-success');
-      succ?.classList.add('show');
-      gsap.from(succ, { opacity: 0, y: 30, duration: 0.7, ease: 'expo.out' });
+  setFormError('');
+
+  const nameInput = document.getElementById('sf-name');
+  const emailInput = document.getElementById('sf-email');
+  const messageInput = document.getElementById('sf-msg');
+  const endpoint = smartForm.action || '';
+
+  if (!nameInput?.value.trim() || !emailInput?.value.trim() || !messageInput?.value.trim()) {
+    setFormError('Please fill in all three fields before sending.');
+    return;
+  }
+
+  if (endpoint.includes('YOUR_FORM_ID')) {
+    setFormError('Add your Formspree form ID to the form action in index.html, then the send will be live.');
+    return;
+  }
+
+  setSubmitting(true);
+
+  try {
+    const response = await fetch(endpoint, {
+      method: smartForm.method || 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+      body: new FormData(smartForm),
+    });
+
+    if (!response.ok) {
+      throw new Error('The contact service rejected the message.');
     }
-  });
+
+    gsap.to('.sf-step.active, .sf-progress', {
+      opacity: 0, y: -20, duration: 0.3, onComplete: () => {
+        document.querySelectorAll('.sf-step').forEach(s => s.classList.remove('active'));
+        const prog = document.querySelector('.sf-progress');
+        if (prog) prog.style.display = 'none';
+        sfSuccess?.classList.add('show');
+        if (sfSuccess) gsap.from(sfSuccess, { opacity: 0, y: 30, duration: 0.7, ease: 'expo.out' });
+      }
+    });
+    smartForm.reset();
+  } catch (error) {
+    setFormError('Message could not be sent right now. Please try again in a moment or use the email link.');
+  } finally {
+    setSubmitting(false);
+  }
 });
 
 /* ─────────────────────────────────────────────────────

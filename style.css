@@ -2396,6 +2396,18 @@ body.cur-drag #cursor-ring {
 .sf-next-btn:hover { transform: scale(1.1); }
 
 .sf-submit { width: 100%; justify-content: center; }
+.sf-submit:disabled { opacity: .72; cursor: not-allowed; transform: none; }
+
+.sf-error {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(180,50,50,.28);
+  background: rgba(180,50,50,.08);
+  color: #f2b8b8;
+  font-size: 13px;
+  line-height: 1.6;
+}
 
 .sf-progress { display: flex; gap: 8px; justify-content: center; margin-top: 24px; }
 .sf-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: var(--trans); cursor: pointer; }
@@ -2492,4 +2504,3 @@ body.cur-drag #cursor-ring {
   .about-headline { font-size: clamp(2rem, 10vw, 3rem); }
   .about-main-grid { gap: 36px; }
 }
-
