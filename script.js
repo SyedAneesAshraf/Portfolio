@@ -191,16 +191,25 @@ function initScrollTriggers() {
   // Only target bento-stat if still present (legacy safety)
   document.querySelectorAll('.bento-stat').forEach(c => countObs.observe(c));
 
-  // GSAP — principles items stagger in from right
-  gsap.utils.toArray('.principle-item').forEach((item, i) => {
-    gsap.fromTo(item,
-      { opacity: 0, x: 30 },
+  // GSAP — stream rows stagger in from right (replaces principle-item animation)
+  gsap.utils.toArray('.stream-row').forEach((row, i) => {
+    gsap.fromTo(row,
+      { opacity: 0, x: 24 },
       {
-        opacity: 1, x: 0, duration: 0.65, delay: i * 0.1, ease: 'expo.out',
-        scrollTrigger: { trigger: '.about-principles-col', start: 'top 82%', once: true }
+        opacity: 1, x: 0, duration: 0.6, delay: i * 0.09, ease: 'expo.out',
+        scrollTrigger: { trigger: '.about-stream', start: 'top 82%', once: true }
       }
     );
   });
+
+  // GSAP — metadata strip fades in on scroll
+  gsap.fromTo('.about-meta-strip',
+    { opacity: 0, y: 16 },
+    {
+      opacity: 1, y: 0, duration: 0.7, ease: 'expo.out',
+      scrollTrigger: { trigger: '.about-meta-strip', start: 'top 88%', once: true }
+    }
+  );
 
   // GSAP — about text column
   gsap.fromTo('.about-text-col',
