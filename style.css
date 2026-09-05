@@ -2084,8 +2084,10 @@ body.cur-drag #cursor-ring {
   width: 100%;
   max-width: 900px;
   margin: 80px auto 60px;
-  /* Extra height: cards start small, expand on hover. Bottom cards peek out. */
-  min-height: 400px;
+  /* Floor height — the deck's absolutely-positioned cards need an explicit
+     box to size against; script.js grows this to fit the tallest card's
+     actual content, this is just the pre-JS/no-JS fallback. */
+  min-height: 480px;
   padding: 0 56px;
   /* Perspective set on stage so all children share the same vanishing point */
   perspective: 1200px;
@@ -2838,7 +2840,7 @@ body.cur-drag #cursor-ring {
   /* Deck: switch to single column on mobile */
   .deck-card { grid-template-columns: 1fr; }
   .dc-preview { min-height: 160px; }
-  .proj-deck-stage { min-height: 460px; padding: 0 18px; }
+  .proj-deck-stage { min-height: 700px; padding: 0 18px; }
   .deck-controls { padding: 0 18px; }
 
   .deck-card.dc-behind-1 { transform: translateX(30px) translateY(6px) rotateX(4deg) scale(0.86) rotateZ(-0.6deg); }

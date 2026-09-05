@@ -1305,7 +1305,14 @@ function initDeckCards() {
     const outCard = cards[current];
     const inCard = cards[next];
 
-    // Neutralise any live tilt on outgoing card
+    // Neutralise any live tilt/transition overrides before animating the swap
+    // (the fast TILT_TRANSITION set during hover must not leak into the
+    // slow, deliberate card-switch animation below)
+    [outCard, inCard].forEach(c => {
+      c.style.transition = '';
+      c.style.removeProperty('--deck-tilt-x');
+      c.style.removeProperty('--deck-tilt-y');
+    });
     outCard.style.transform = '';
 
     // 1. Slide active card out
@@ -1339,7 +1346,36 @@ function initDeckCards() {
     });
   }
 
+  // ── Keep the stage tall enough for the tallest card's real content ──
+  // Cards are position:absolute so the stage's height doesn't auto-derive
+  // from them; measure every card (visible or not — scrollHeight still
+  // reflects natural content height) and grow the stage to fit whichever
+  // needs the most room, so nothing gets clipped by deck-card's overflow:hidden.
+  function sizeStage() {
+    if (!stage) return;
+    const stacked = window.matchMedia('(max-width: 768px)').matches;
+    let maxNeeded = 0;
+    cards.forEach(card => {
+      const body = card.querySelector('.dc-body');
+      const preview = card.querySelector('.dc-preview');
+      if (!body || !preview) return;
+      const needed = stacked
+        ? body.scrollHeight + preview.scrollHeight
+        : Math.max(body.scrollHeight, preview.scrollHeight);
+      if (needed > maxNeeded) maxNeeded = needed;
+    });
+    if (maxNeeded > 0) stage.style.minHeight = `${maxNeeded + 24}px`;
+  }
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(sizeStage, 150);
+  });
+  if (document.fonts?.ready) document.fonts.ready.then(sizeStage);
+
   applyClasses();
+  sizeStage();
   startAutoCycle();
 
   // ── Arrow & dot buttons ──
@@ -1397,12 +1433,29 @@ function initDeckCards() {
 
   // ── 3D mouse-tilt + spotlight on the ACTIVE card ──
   const MAX_TILT = 10; // degrees
+  // .deck-card's stylesheet transition (0.65s) is tuned for the carousel's
+  // card-switch animation. Reusing it for the live tilt-follow would make
+  // every mousemove ease in over 0.65s — the cursor "outruns" the tilt and,
+  // worse, the tilt keeps visibly drifting/settling for that long after the
+  // mouse stops. Swap in a near-instant transition just for the transform
+  // while actively tracking the cursor, then hand control back to CSS.
+  const TILT_TRANSITION = 'transform 0.12s ease-out, box-shadow 0.5s ease, border-color 0.4s ease, opacity 0.5s cubic-bezier(0.16,1,0.3,1)';
 
   function getActiveCard() { return cards[current]; }
+
+  function settleTilt(card) {
+    card.style.setProperty('--deck-tilt-x', '0deg');
+    card.style.setProperty('--deck-tilt-y', '0deg');
+    // Let the fast transition ease the tilt back to flat, then release the
+    // override so the next card-switch animation uses the slow CSS default.
+    setTimeout(() => { card.style.transition = ''; }, 200);
+  }
 
   stage?.addEventListener('mousemove', e => {
     const card = getActiveCard();
     if (!card || !card.classList.contains('dc-active')) return;
+
+    card.style.transition = TILT_TRANSITION;
 
     const r = card.getBoundingClientRect();
     const cx = r.left + r.width / 2;
@@ -1432,16 +1485,12 @@ function initDeckCards() {
   stage?.addEventListener('mouseleave', () => {
     const card = getActiveCard();
     if (!card) return;
-    card.style.setProperty('--deck-tilt-x', '0deg');
-    card.style.setProperty('--deck-tilt-y', '0deg');
+    settleTilt(card);
   });
 
   // Reset tilt when card changes (card itself mouseleave)
   cards.forEach(card => {
-    card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--deck-tilt-x', '0deg');
-      card.style.setProperty('--deck-tilt-y', '0deg');
-    });
+    card.addEventListener('mouseleave', () => settleTilt(card));
   });
 }
 
