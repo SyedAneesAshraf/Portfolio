@@ -282,6 +282,25 @@ body.cur-drag #cursor-ring {
 .nav-link:hover  { color: var(--almond); background: rgba(231,212,187,.06); }
 .nav-link.active { color: var(--almond); background: rgba(133,120,97,.18); }
 
+/* Distinct, contrasting Resume CTA — recruiters shouldn't have to hunt for it */
+.nav-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+  padding: 8px 16px;
+  background: var(--grad);
+  color: var(--carbon);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  border-radius: var(--rad-xl);
+  transition: var(--trans);
+  white-space: nowrap;
+  cursor: none;
+}
+.nav-resume-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(133,120,97,.4); }
+
 /* .theme-toggle removed */
 
 /* ══════════  SIDE RAILS  ══════════ */
@@ -1001,7 +1020,7 @@ body.cur-drag #cursor-ring {
   align-items: center;
   gap: 20px;
   width: max-content;
-  animation: marquee-scroll 40s linear infinite;
+  animation: marquee-scroll 65s linear infinite;
   white-space: nowrap;
   font-family: var(--ff-mono);
   font-size: 11px;
@@ -1640,7 +1659,7 @@ body.cur-drag #cursor-ring {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
   gap: 28px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .skills-visual-panel,
@@ -1655,6 +1674,8 @@ body.cur-drag #cursor-ring {
 
 .skills-visual-panel {
   padding: 28px;
+  display: flex;
+  flex-direction: column;
 }
 
 .skills-toolbar {
@@ -1710,6 +1731,7 @@ body.cur-drag #cursor-ring {
 .sphere-wrapper {
   margin-bottom: 22px;
   min-height: 430px;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1914,6 +1936,7 @@ body.cur-drag #cursor-ring {
 .tier-core { box-shadow: inset 0 1px 0 rgba(231,212,187,.03); }
 .tier-collab { box-shadow: inset 0 1px 0 rgba(133,120,97,.02); }
 .tier-learn { box-shadow: inset 0 1px 0 rgba(72,37,47,.04); }
+.tier-frontend { box-shadow: inset 0 1px 0 rgba(133,120,97,.05); }
 
 .sphere-wrapper .tech-sphere {
   width: min(440px, 100%);
@@ -2213,35 +2236,6 @@ body.cur-drag #cursor-ring {
 }
 .deck-card.dc-active:hover::after { opacity: 1; }
 
-/* ── "Hover to expand" hint label ── */
-.dc-hover-hint {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--ff-mono);
-  font-size: 9px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(133,120,97,.5);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  z-index: 5;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.dc-hover-hint::before,
-.dc-hover-hint::after {
-  content: '';
-  display: block;
-  width: 18px;
-  height: 1px;
-  background: rgba(133,120,97,.3);
-}
-.deck-card.dc-active:hover .dc-hover-hint { opacity: 0; }
-
 /* ── Card preview (left visual half) ── */
 .dc-preview {
   position: relative;
@@ -2251,11 +2245,7 @@ body.cur-drag #cursor-ring {
   overflow: hidden;
   min-height: 340px;
   padding: 24px 20px;
-  /* Preview contents blur/dim when card is compact */
-  transition: filter 0.5s ease;
 }
-/* Blur preview when not hovered — 'folded' look */
-.deck-card.dc-active:not(:hover) .dc-preview { filter: brightness(0.75) blur(0.5px); }
 
 .dc-preview-1 { background: linear-gradient(145deg, rgba(72,37,47,.7) 0%, rgba(133,120,97,.22) 100%); }
 .dc-preview-2 { background: linear-gradient(145deg, rgba(30,35,20,.8) 0%, rgba(133,120,97,.28) 100%); }
@@ -2285,16 +2275,7 @@ body.cur-drag #cursor-ring {
   gap: 12px;
   position: relative;
   z-index: 2;
-  /* Body content is hidden/faded when compact, reveals on hover */
-  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
-}
-.deck-card.dc-active:not(:hover) .dc-body {
-  opacity: 0.4;
-  transform: translateY(6px);
-}
-.deck-card.dc-active:hover .dc-body {
   opacity: 1;
-  transform: translateY(0);
 }
 
 /* Glowing top border — sweeps in on hover */
@@ -2355,31 +2336,32 @@ body.cur-drag #cursor-ring {
   background-clip: text;
   line-height: 1.12;
   letter-spacing: -.02em;
-  /* Slides up on reveal */
-  transition: transform 0.5s 0.05s cubic-bezier(0.16,1,0.3,1);
 }
-.deck-card.dc-active:not(:hover) .dc-title { transform: translateY(4px); }
-.deck-card.dc-active:hover       .dc-title { transform: translateY(0); }
+
+.dc-achievement {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px 11px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .04em;
+  color: var(--almond);
+  background: var(--grad-warm);
+  border-radius: var(--rad-xl);
+}
 
 .dc-desc {
   font-size: 13px;
   color: var(--text-m);
   line-height: 1.82;
   flex: 1;
-  /* Slides up with stagger */
-  transition: transform 0.5s 0.1s cubic-bezier(0.16,1,0.3,1),
-              opacity   0.4s 0.08s ease;
 }
-.deck-card.dc-active:not(:hover) .dc-desc { transform: translateY(8px); opacity: 0; }
-.deck-card.dc-active:hover       .dc-desc { transform: translateY(0);   opacity: 1; }
 
-/* ── Hover-reveal stat chips ── */
 .dc-extra {
-  transition: transform 0.5s 0.13s cubic-bezier(0.16,1,0.3,1),
-              opacity   0.4s 0.11s ease;
+  opacity: 1;
 }
-.deck-card.dc-active:not(:hover) .dc-extra { transform: translateY(10px); opacity: 0; }
-.deck-card.dc-active:hover       .dc-extra { transform: translateY(0);    opacity: 1; }
 
 .dc-stats {
   display: flex;
@@ -2436,11 +2418,7 @@ body.cur-drag #cursor-ring {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  transition: transform 0.5s 0.15s cubic-bezier(0.16,1,0.3,1),
-              opacity   0.4s 0.12s ease;
 }
-.deck-card.dc-active:not(:hover) .dc-stack { transform: none; opacity: 1; }
-.deck-card.dc-active:hover       .dc-stack { transform: translateY(0);   opacity: 1; }
 
 .dc-stack span {
   font-family: var(--ff-mono);
@@ -2456,11 +2434,7 @@ body.cur-drag #cursor-ring {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  transition: transform 0.5s 0.2s cubic-bezier(0.16,1,0.3,1),
-              opacity   0.4s 0.17s ease;
 }
-.deck-card.dc-active:not(:hover) .dc-actions { transform: translateY(10px); opacity: 0; }
-.deck-card.dc-active:hover       .dc-actions { transform: translateY(0);    opacity: 1; }
 
 /* Shared plink-btn (used in both old and deck layouts) */
 .plink-btn {
@@ -2883,6 +2857,8 @@ body.cur-drag #cursor-ring {
 @media (max-width: 600px) {
   .nav-island { padding: 6px 7px; gap: 0; }
   .nav-link   { padding: 7px 11px; font-size: 12px; }
+  .nav-resume-btn { padding: 8px 10px; margin-left: 2px; }
+  .nav-resume-label { display: none; }
   .skills-grid { grid-template-columns: 1fr; }
   .section-container { padding: 70px 18px; }
   .px-section { padding-left: 18px; padding-right: 18px; }

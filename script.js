@@ -93,11 +93,11 @@ document.querySelectorAll(DRAG_SELECTORS).forEach(el => {
    ───────────────────────────────────────────────────── */
 const typeEl = document.getElementById('typewriter');
 const phrases = [
-  'build web apps',
-  'craft clean UIs',
+  'architect multi-agent AI systems',
+  'build RAG pipelines',
+  'ship real-time collab tools',
+  'design scalable APIs',
   'solve hard problems',
-  'design UI/UX',
-  'ship products fast',
 ];
 let pIdx = 0, cIdx = 0, deleting = false;
 
@@ -1269,15 +1269,8 @@ function initDeckCards() {
     startAutoCycle();
   }
 
-  // Inject hover-hint label and spotlight glow into every card
+  // Inject spotlight glow into every card
   cards.forEach(card => {
-    // Hint
-    if (!card.querySelector('.dc-hover-hint')) {
-      const hint = document.createElement('div');
-      hint.className = 'dc-hover-hint';
-      hint.textContent = 'hover to reveal';
-      card.appendChild(hint);
-    }
     // Make sure glow el exists
     const preview = card.querySelector('.dc-preview');
     if (preview && !preview.querySelector('.dc-preview-glow')) {
